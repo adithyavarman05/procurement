@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Raw Material</title>
+    <!-- This component assumes Tailwind CSS is already loaded on your main website -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* This styling is just for demonstration if you run this file directly. */
+        /* On your main site, it will inherit the body styles. */
+        body { 
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9; /* bg-slate-100 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .form-input { @apply w-full px-4 py-2 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white; }
+        .btn-primary { @apply w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-300 transition-colors duration-300 flex items-center justify-center; }
+    </style>
+</head>
+<body>
+
+    <!-- ▼▼▼ COPY FROM HERE ▼▼▼ -->
+    <div id="add-material-component" class="w-full max-w-3xl bg-white p-8 md:p-10 rounded-2xl shadow-lg">
+        
+        <div class="mb-8">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800">Add New Raw Material</h2>
+            <p class="text-gray-500 mt-2">Enter the details of a new material to add it to the system for approval.</p>
+        </div>
+
+        <form id="newMaterialForm" novalidate>
+            <div class="space-y-6">
+                
+                <fieldset>
+                    <legend class="text-lg font-semibold text-gray-700 pb-2 mb-4">Material Details</legend>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="materialName" class="block text-sm font-medium text-gray-600 mb-1">Material Name <span class="text-red-500">*</span></label>
+                            <input type="text" id="materialName" class="form-input" placeholder="e.g., High-Tensile Steel Rod" required>
+                        </div>
+                        <div>
+                            <label for="materialSKU" class="block text-sm font-medium text-gray-600 mb-1">Material Code / SKU</label>
+                            <input type="text" id="materialSKU" class="form-input" placeholder="e.g., HTSR-0012">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="materialCategory" class="block text-sm font-medium text-gray-600 mb-1">Material Category <span class="text-red-500">*</span></label>
+                            <select id="materialCategory" class="form-input" required>
+                                <option value="">Select a material type...</option>
+                                <option value="steel">Steel</option>
+                                <option value="aluminium">Aluminium</option>
+                                <option value="copper">Copper</option>
+                                <option value="brass">Brass</option>
+                                <option value="bronze">Bronze</option>
+                                <option value="plastics">Plastics</option>
+                                <option value="rubber">Rubber</option>
+                                <option value="chemicals_solvents">Chemicals & Solvents</option>
+                                <option value="fasteners_hardware">Fasteners & Hardware</option>
+                                <option value="electronics">Electronic Components</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
+                             <label for="materialDescription" class="block text-sm font-medium text-gray-600 mb-1">Description</label>
+                             <textarea id="materialDescription" rows="3" class="form-input" placeholder="Enter a brief description or specification..."></textarea>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend class="text-lg font-semibold text-gray-700 pb-2 mb-4">Supplier & Pricing</legend>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                         <div>
+                            <label for="supplierName" class="block text-sm font-medium text-gray-600 mb-1">Supplier Name <span class="text-red-500">*</span></label>
+                            <input type="text" id="supplierName" class="form-input" placeholder="Enter supplier's registered name" required>
+                        </div>
+                        <div>
+                            <label for="pricePerUnit" class="block text-sm font-medium text-gray-600 mb-1">Price per Unit (₹) <span class="text-red-500">*</span></label>
+                            <input type="number" step="0.01" id="pricePerUnit" class="form-input" placeholder="e.g., 120.75" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="unitOfMeasure" class="block text-sm font-medium text-gray-600 mb-1">Unit of Measure <span class="text-red-500">*</span></label>
+                            <select id="unitOfMeasure" class="form-input" required>
+                                <option value="kg">Kilogram (kg)</option>
+                                <option value="ton">Ton</option>
+                                <option value="meter">Meter (m)</option>
+                                <option value="piece">Piece</option>
+                                <option value="liter">Liter (L)</option>
+                                <option value="set">Set</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="mt-10">
+                <button type="submit" id="submitBtn" class="btn-primary">
+                    <span id="buttonText">Add Material to System</span>
+                    <svg id="spinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                </button>
+            </div>
+        </form>
+
+        <div id="statusMessage" class="mt-6 text-center text-sm font-medium" role="alert"></div>
+    </div>
+    <!-- ▲▲▲ COPY UNTIL HERE ▲▲▲ -->
+
+    <!-- This script should be placed just before the closing </body> tag on your main site. -->
+    <script>
+        const newMaterialForm = document.getElementById('newMaterialForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const buttonText = document.getElementById('buttonText');
+        const spinner = document.getElementById('spinner');
+        const statusMessage = document.getElementById('statusMessage');
+
+        newMaterialForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            if (!newMaterialForm.checkValidity()) {
+                newMaterialForm.reportValidity();
+                return;
+            }
+
+            // Simulate API call
+            submitBtn.disabled = true;
+            spinner.classList.remove('hidden');
+            buttonText.textContent = 'Submitting...';
+            statusMessage.innerHTML = ''; // Clear previous message
+
+            const materialName = document.getElementById('materialName').value;
+
+            // Simulate a delay for network request
+            setTimeout(() => {
+                spinner.classList.add('hidden');
+                buttonText.textContent = 'Add Material to System';
+                submitBtn.disabled = false;
+
+                // Display success message
+                statusMessage.innerHTML = `<div class="p-3 rounded-lg bg-green-100 text-green-800">Successfully added "${materialName}". It is now pending approval.</div>`;
+                
+                newMaterialForm.reset();
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
+

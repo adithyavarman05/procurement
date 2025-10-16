@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Specification Verification</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .form-input { @apply w-full px-4 py-2 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white; }
+        .btn-primary { @apply w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:bg-green-300 transition-colors duration-300 flex items-center justify-center; }
+        .modal-overlay { @apply fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 transition-opacity duration-300; }
+        .modal-content { @apply bg-white rounded-lg shadow-2xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto transform transition-transform duration-300 scale-95; }
+    </style>
+</head>
+<body class="bg-slate-100">
+
+    <div class="container mx-auto px-4 py-12 min-h-screen flex items-center justify-center">
+        <div class="w-full max-w-3xl bg-white p-8 md:p-12 rounded-2xl shadow-lg">
+            
+            <div class="text-center mb-10">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-800">Material Specification & Quality Verification</h1>
+                <p class="text-gray-500 mt-2">Submit a material for approval by our Quality Assurance team.</p>
+            </div>
+
+            <form id="verificationForm" novalidate>
+                <div class="space-y-8">
+                    
+                    <fieldset>
+                        <legend class="text-xl font-semibold text-gray-700 border-b pb-2 mb-6">Material Identification</legend>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="materialName" class="block text-sm font-medium text-gray-600 mb-1">Material Name / Description</label>
+                                <input type="text" id="materialName" name="materialName" class="form-input" placeholder="e.g., Cold Rolled Steel Coil" required>
+                            </div>
+                            <div>
+                                <label for="materialBrand" class="block text-sm font-medium text-gray-600 mb-1">Brand / Original Manufacturer</label>
+                                <input type="text" id="materialBrand" name="materialBrand" class="form-input" placeholder="e.g., TATA Steel, JSW" required>
+                            </div>
+                             <div>
+                                <label for="materialGrade" class="block text-sm font-medium text-gray-600 mb-1">Material Grade</label>
+                                <input type="text" id="materialGrade" name="materialGrade" class="form-input" placeholder="e.g., E250A, CRCA" required>
+                            </div>
+                            <div>
+                                <label for="complianceStandard" class="block text-sm font-medium text-gray-600 mb-1">Compliance Standard(s)</label>
+                                <input type="text" id="complianceStandard" name="complianceStandard" class="form-input" placeholder="e.g., IS 2062, ASTM A36" required>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                         <legend class="text-xl font-semibold text-gray-700 border-b pb-2 mb-6">Physical & Mechanical Properties</legend>
+                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                             <div>
+                                 <label for="thickness" class="block text-sm font-medium text-gray-600 mb-1">Thickness (mm)</label>
+                                 <input type="number" step="0.01" id="thickness" name="thickness" class="form-input" placeholder="e.g., 2.5" required>
+                             </div>
+                              <div>
+                                 <label for="bendDegree" class="block text-sm font-medium text-gray-600 mb-1">Bend Test Degree</label>
+                                 <input type="text" id="bendDegree" name="bendDegree" class="form-input" placeholder="e.g., 180° Pass" required>
+                             </div>
+                             <div>
+                                 <label for="tensileStrength" class="block text-sm font-medium text-gray-600 mb-1">Tensile Strength (MPa)</label>
+                                 <input type="number" id="tensileStrength" name="tensileStrength" class="form-input" placeholder="e.g., 410">
+                             </div>
+                         </div>
+                    </fieldset>
+
+                     <fieldset>
+                         <legend class="text-xl font-semibold text-gray-700 border-b pb-2 mb-6">Supporting Documentation</legend>
+                         <p class="text-sm text-gray-500 mb-4">Upload technical documents that verify the material's properties and quality.</p>
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                             <div>
+                                 <label for="mtcUpload" class="block text-sm font-medium text-gray-600 mb-1">Material Test Certificate (MTC) <span class="text-red-500">*</span></label>
+                                 <input type="file" id="mtcUpload" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100" required>
+                             </div>
+                              <div>
+                                 <label for="tdsUpload" class="block text-sm font-medium text-gray-600 mb-1">Technical Data Sheet (TDS)</label>
+                                 <input type="file" id="tdsUpload" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100">
+                             </div>
+                         </div>
+                    </fieldset>
+
+                    <div class="pt-4 border-t">
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                <input id="agreement" name="agreement" type="checkbox" class="focus:ring-green-500 h-4 w-4 text-green-600 border-gray-300 rounded" required>
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="agreement" class="font-medium text-gray-700">I declare that the information and documents provided are accurate and the material conforms to the standards stated. <button type="button" id="openModalBtn" class="text-blue-600 hover:underline font-semibold">View Declaration</button>.</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12">
+                    <button type="submit" id="submitBtn" class="btn-primary">
+                        <span id="buttonText">Submit for QA Review</span>
+                        <svg id="spinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                    </button>
+                </div>
+            </form>
+
+            <div id="statusMessage" class="mt-8 text-center text-sm font-medium" role="alert"></div>
+        </div>
+    </div>
+    
+    <div id="legalModal" class="modal-overlay hidden opacity-0">
+        <div class="modal-content scale-95">
+             <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Declaration of Conformity</h2>
+                <button id="closeModalBtn" class="text-gray-500 hover:text-gray-800">&times;</button>
+            </div>
+            <div class="prose max-w-none text-gray-600 space-y-4">
+                <p>By submitting this form, the supplier ("Declarant") hereby declares under sole responsibility that the material described within this submission:</p>
+                <ul class="list-disc list-inside">
+                    <li>Conforms to all specifications, drawings, and standards referenced in the submission.</li>
+                    <li>Complies with all applicable national and international industry regulations and standards.</li>
+                    <li>Is supported by a genuine and unaltered Material Test Certificate (MTC) and/or Technical Data Sheet (TDS).</li>
+                </ul>
+                <p>The Declarant agrees to full liability for any discrepancies, defects, or failures resulting from inaccurate or misleading information provided in this declaration.</p>
+            </div>
+        </div>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('verificationForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const buttonText = document.getElementById('buttonText');
+        const spinner = document.getElementById('spinner');
+        const statusMessage = document.getElementById('statusMessage');
+        const modal = document.getElementById('legalModal');
+        const openBtn = document.getElementById('openModalBtn');
+        const closeBtn = document.getElementById('closeModalBtn');
+        
+        openBtn.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('.modal-content').classList.remove('scale-95');
+            }, 10);
+        });
+        const closeModal = () => {
+            modal.classList.add('opacity-0');
+            modal.querySelector('.modal-content').classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        };
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', e => e.target === modal && closeModal());
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            submitBtn.disabled = true;
+            spinner.classList.remove('hidden');
+            buttonText.textContent = 'Submitting...';
+            statusMessage.innerHTML = `<div class="p-3 rounded-lg bg-yellow-100 text-yellow-800">Submitting material data to the Quality Assurance portal...</div>`;
+            setTimeout(() => {
+                spinner.classList.add('hidden');
+                buttonText.textContent = 'Submit for QA Review';
+                submitBtn.disabled = false;
+                statusMessage.innerHTML = `<div class="p-3 rounded-lg bg-green-100 text-green-800">Material specification submitted successfully! It is now pending review from the QA team.</div>`;
+                form.reset();
+            }, 2000);
+        });
+    });
+</script>
+</body>
+</html>
